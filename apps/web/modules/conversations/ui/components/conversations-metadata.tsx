@@ -20,23 +20,23 @@ import {
 import Link from 'next/link';
 import { getContryFromTimezone } from '@/lib/common';
 
-type ConversationsMetadataProps = {
+type ConversationsMetadataAttributes = {
   conversation: Doc<'conversations'> & {
     contactSession: Doc<'contactSessions'>;
   };
 };
 
-type InfoItem = {
+type DetailItem = {
   label: string;
   value: string | React.ReactNode;
   className?: string;
 };
 
-type InfoSection = {
+type DetailSection = {
   id: string;
   icon: React.ComponentType<{ className?: string }>;
   title: string;
-  items: InfoItem[];
+  items: DetailItem[];
 };
 
 const formatTimezoneOffset = (offsetMinutes: number) => {
@@ -49,7 +49,7 @@ const formatTimezoneOffset = (offsetMinutes: number) => {
 
 export const ConversationsMetadata = ({
   conversation
-}: ConversationsMetadataProps) => {
+}: ConversationsMetadataAttributes) => {
   const countryInfo = useMemo(() => {
     return getContryFromTimezone(
       conversation.contactSession.metadata?.timezone
@@ -83,7 +83,7 @@ export const ConversationsMetadata = ({
     return parseUserAgent(conversation.contactSession.metadata?.userAgent);
   }, [conversation.contactSession.metadata?.userAgent]);
 
-  const accordionData: InfoSection[] = useMemo(() => {
+  const accordionData: DetailSection[] = useMemo(() => {
     if (!conversation.contactSession?.metadata) return [];
     return [
       {
