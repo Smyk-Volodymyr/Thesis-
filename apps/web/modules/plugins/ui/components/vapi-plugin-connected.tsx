@@ -36,16 +36,16 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  useVapiAssistants,
-  useVapiPhoneNumbers
-} from '@/modules/plugins/hooks/use-vapi-data';
+  useVapiAgents,
+  useVapiNumbers
+} from '@/modules/plugins/hooks/use-vapi-resources';
 
-interface VapiPluginConnectedProps {
+interface VapiPluginConnectedAttributes {
   onDisconnect: () => void;
 }
 
 const VapiPhoneNumberTabContent = () => {
-  const { data: phoneNumbers, loading } = useVapiPhoneNumbers();
+  const { data: phoneNumbers, loading } = useVapiNumbers();
 
   const copyToClipboard = (phoneNumber: string) => {
     try {
@@ -144,7 +144,7 @@ const VapiPhoneNumberTabContent = () => {
 };
 
 const VapiAssistantTabContent = () => {
-  const { data: assistants, loading } = useVapiAssistants();
+  const { data: assistants, loading } = useVapiAgents();
 
   return (
     <div className='mb-4 px-4'>
@@ -216,7 +216,7 @@ const VapiAssistantTabContent = () => {
 
 export const VapiPluginConnected = ({
   onDisconnect
-}: VapiPluginConnectedProps) => {
+}: VapiPluginConnectedAttributes) => {
   const [activeTab, setActiveTab] = useState('phone-numbers');
 
   return (

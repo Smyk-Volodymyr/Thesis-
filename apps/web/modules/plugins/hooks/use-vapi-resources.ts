@@ -6,7 +6,7 @@ import { api } from '@workspace/backend/_generated/api';
 type PhoneNumbers = typeof api.private.vapi.getPhoneNumbers._returnType;
 type Assistants = typeof api.private.vapi.getAssistants._returnType;
 
-export const useVapiPhoneNumbers = (): {
+export const useVapiNumbers = (): {
   data: PhoneNumbers;
   loading: boolean;
   error: Error | null;
@@ -48,7 +48,7 @@ export const useVapiPhoneNumbers = (): {
   return { data, loading, error };
 };
 
-export const useVapiAssistants = (): {
+export const useVapiAgents = (): {
   data: Assistants;
   loading: boolean;
   error: Error | null;

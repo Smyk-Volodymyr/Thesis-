@@ -15,19 +15,19 @@ import {
   SelectValue
 } from '@workspace/ui/components/select';
 import {
-  useVapiAssistants,
-  useVapiPhoneNumbers
-} from '@/modules/plugins/hooks/use-vapi-data';
+  useVapiAgents,
+  useVapiNumbers
+} from '@/modules/plugins/hooks/use-vapi-resources';
 import { type WidgetCustomizationFormSchema } from '@/modules/widget-customization/ui/types';
 
-interface VapiFormFieldsProps {
+interface VapiFormFieldsAttributes {
   form: UseFormReturn<WidgetCustomizationFormSchema>;
 }
 
-export const VapiFormFields = ({ form }: VapiFormFieldsProps) => {
-  const { data: assistants, loading: assistantsLoading } = useVapiAssistants();
+export const VapiFormFields = ({ form }: VapiFormFieldsAttributes) => {
+  const { data: assistants, loading: assistantsLoading } = useVapiAgents();
   const { data: phoneNumbers, loading: phoneNumbersLoading } =
-    useVapiPhoneNumbers();
+    useVapiNumbers();
 
   const disabled = form.formState.isSubmitting;
 
