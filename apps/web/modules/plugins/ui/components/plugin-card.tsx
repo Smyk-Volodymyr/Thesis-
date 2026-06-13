@@ -10,7 +10,7 @@ export interface Feature {
   label: string;
 }
 
-interface PluginCardProps {
+interface PluginCardAttributes {
   isDisabled: boolean;
   serviceName: string;
   serviceImage: string;
@@ -24,7 +24,7 @@ export const PluginCard = ({
   serviceImage,
   features,
   onSubmit
-}: PluginCardProps) => {
+}: PluginCardAttributes) => {
   return (
     <div className='bg-muted h-fit w-full rounded-lg border p-8'>
       <div className='mb-6 flex items-center justify-center gap-4'>

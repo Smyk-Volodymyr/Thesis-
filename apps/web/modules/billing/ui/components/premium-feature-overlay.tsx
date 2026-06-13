@@ -27,7 +27,7 @@ interface Feature {
   icon: LucideIcon;
 }
 
-interface PremiumFeatureOverlayProps {
+interface PremiumFeatureOverlayAttributes {
   children: React.ReactNode;
 }
 
@@ -66,7 +66,7 @@ const features: Feature[] = [
 
 export const PremiumFeatureOverlay = ({
   children
-}: PremiumFeatureOverlayProps) => {
+}: PremiumFeatureOverlayAttributes) => {
   const router = useRouter();
   return (
     <div className='relative min-h-screen'>

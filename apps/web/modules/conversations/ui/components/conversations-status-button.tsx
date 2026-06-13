@@ -8,7 +8,7 @@ import {
   Loader2Icon
 } from 'lucide-react';
 
-type ConversationsStatusButtonProps = {
+type ConversationsStatusButtonAttributes = {
   status: Doc<'conversations'>['status'];
   onClick: () => void;
   isSubmitting?: boolean;
@@ -27,7 +27,7 @@ export const ConversationsStatusButton = ({
   status,
   onClick,
   isSubmitting
-}: ConversationsStatusButtonProps) => {
+}: ConversationsStatusButtonAttributes) => {
   return (
     <>
       {status === 'resolved' ? (
