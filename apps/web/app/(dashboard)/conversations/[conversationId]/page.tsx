@@ -1,7 +1,7 @@
 import { Id } from '@workspace/backend/_generated/dataModel';
 import { ConversationsDetailView } from '@/modules/conversations/ui/views/conversations-detail-view';
 
-type ConversationDetailPageProps = {
+type ConversationDetailPageAttributes = {
   params: Promise<{
     conversationId: string;
   }>;
@@ -9,7 +9,7 @@ type ConversationDetailPageProps = {
 
 export default async function ConversationDetailPage({
   params
-}: ConversationDetailPageProps) {
+}: ConversationDetailPageAttributes) {
   const { conversationId } = await params;
 
   return (

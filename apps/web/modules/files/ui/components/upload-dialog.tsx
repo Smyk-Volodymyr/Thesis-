@@ -23,7 +23,7 @@ import {
 } from '@workspace/ui/components/ui/kibo-ui/dropzone';
 import { Loader2Icon } from 'lucide-react';
 
-interface UploadDialogProps {
+interface UploadDialogAttributes {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onFileUploadCallback?: () => void;
@@ -33,7 +33,7 @@ export const UploadDialog = ({
   open,
   onOpenChange,
   onFileUploadCallback
-}: UploadDialogProps) => {
+}: UploadDialogAttributes) => {
   const addFiles = useAction(api.private.files.addFile);
 
   const [uploadFiles, setUploadFiles] = useState<File[]>([]);

@@ -16,7 +16,7 @@ import {
 } from '@workspace/ui/components/dialog';
 import { Loader2Icon } from 'lucide-react';
 
-interface DeleteFileDialogProps {
+interface DeleteFileDialogAttributes {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDeleteCallback?: () => void;
@@ -28,7 +28,7 @@ export const DeleteFileDialog = ({
   onOpenChange,
   onDeleteCallback,
   file
-}: DeleteFileDialogProps) => {
+}: DeleteFileDialogAttributes) => {
   const deleteFile = useAction(api.private.files.deleteFile);
   const [isDeleting, setIsDeleting] = useState(false);
 
