@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger
 } from '@workspace/ui/components/tooltip';
-import { useIsMobile } from '@workspace/ui/hooks/use-mobile';
+import { useIsHandheld } from '@workspace/ui/hooks/use-mobile';
 import { cn } from '@workspace/ui/lib/utils';
 import { Slot } from '@radix-ui/react-slot';
 import { cva, VariantProps } from 'class-variance-authority';
@@ -65,7 +65,7 @@ function SidebarProvider({
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }) {
-  const isMobile = useIsMobile();
+  const isMobile = useIsHandheld();
   const [openMobile, setOpenMobile] = React.useState(false);
 
   // This is the internal state of the sidebar.
