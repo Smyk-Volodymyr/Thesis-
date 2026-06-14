@@ -3,24 +3,15 @@
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@workspace/ui/components/button';
-import {
-  Dialog,
-  DialogHeader,
-  DialogTitle,
-  DialogContent,
-  DialogDescription
-} from '@workspace/ui/components/dialog';
 import { Input } from '@workspace/ui/components/input';
 import { Label } from '@workspace/ui/components/label';
 import { Separator } from '@workspace/ui/components/separator';
 import { useOrganization } from '@clerk/nextjs';
 import { CheckIcon, ClipboardIcon } from 'lucide-react';
-import Image from 'next/image';
-import {
-  type IntegrationId,
-  INTEGRATIONS
-} from '@/modules/integrations/constants';
+import { type IntegrationId } from '@/modules/integrations/constants';
 import { createSnippet } from '@/modules/integrations/utils';
+import { IntegrationDialog } from '@/modules/integrations/ui/components/integration-dialog';
+import { IntegrationGrid } from '@/modules/integrations/ui/components/integration-grid';
 
 export const IntegrationsView = () => {
   const { organization } = useOrganization();
@@ -48,8 +39,8 @@ export const IntegrationsView = () => {
       return;
     }
 
-    const snippet = createSnippet(integrationId, organization.id);
-    setSnippet(snippet);
+    const generatedSnippet = createSnippet(integrationId, organization.id);
+    setSnippet(generatedSnippet);
     setOpenDialog(true);
   };
 
@@ -103,23 +94,7 @@ export const IntegrationsView = () => {
                 Add the following code to your website to enable the chatbox.
               </p>
             </div>
-            <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
-              {INTEGRATIONS.map((integration) => (
-                <button
-                  key={integration.id}
-                  className='bg-muted hover:bg-accent flex items-center gap-4 rounded-lg border p-4'
-                  onClick={() => handleIntegrationClick(integration.id)}
-                >
-                  <Image
-                    src={integration.icon}
-                    alt={integration.title}
-                    width={32}
-                    height={32}
-                  />
-                  <p className='text-sm font-medium'>{integration.title}</p>
-                </button>
-              ))}
-            </div>
+            <IntegrationGrid onSelect={handleIntegrationClick} />
           </div>
         </div>
       </div>
@@ -129,75 +104,5 @@ export const IntegrationsView = () => {
         snippet={snippet}
       />
     </>
-  );
-};
-
-const IntegrationDialog = ({
-  open,
-  onOpenChange,
-  snippet
-}: {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  snippet: string;
-}) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(snippet);
-      setCopied(true);
-      toast.success('Copied to clipboard');
-    } catch (error) {
-      toast.error('Failed to copy to clipboard');
-    } finally {
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    }
-  };
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className='lg:min-w-[600px]'>
-        <DialogHeader>
-          <DialogTitle>Integration with your website</DialogTitle>
-          <DialogDescription>
-            Add the following code to your website to enable the chatbox.
-          </DialogDescription>
-        </DialogHeader>
-        <div className='space-y-6'>
-          <div className='space-y-2'>
-            <div className='py-2 text-sm'>1. Copy the following code.</div>
-            <div className='group relative'>
-              <pre className='bg-foreground text-secondary max-h-[300px] overflow-auto whitespace-pre-wrap break-all rounded-md p-2 font-mono text-sm'>
-                {snippet}
-              </pre>
-              <Button
-                className='absolute right-2 top-2 size-6 opacity-0 transition-opacity group-hover:opacity-100'
-                size='icon'
-                variant='secondary'
-                onClick={handleCopy}
-                disabled={copied}
-              >
-                {copied ? (
-                  <CheckIcon className='size-3' />
-                ) : (
-                  <ClipboardIcon className='size-3' />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          <div className='space-y-2'>
-            <div className='py-2 text-sm'>
-              2. Paste it into the <code>head</code> section of your website.
-            </div>
-            <p className='text-muted-foreground text-sm'>
-              Add the following code to your website to enable the chatbox.
-            </p>
-          </div>
-        </div>
-      </DialogContent>
-    </Dialog>
   );
 };
