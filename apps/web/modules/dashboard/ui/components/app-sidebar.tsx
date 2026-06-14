@@ -5,31 +5,28 @@ import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail
 } from '@workspace/ui/components/sidebar';
-import { cn } from '@workspace/ui/lib/utils';
 import { OrganizationSwitcher, UserButton } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { useTheme } from 'next-themes';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useMediaQuery } from '@/hooks/use-media-query';
+import { useViewportQuery } from '@/hooks/use-viewport-query';
 import {
   accountNavItems,
   configurationNavItems,
   customerSupportNavItems
 } from '@/modules/dashboard/ui/constants/nav';
+import { SidebarNavGroup } from '@/modules/dashboard/ui/components/sidebar-nav-group';
 
 export const AppSidebar = () => {
   const { resolvedTheme } = useTheme();
   const pathname = usePathname();
-  const { isOpen } = useMediaQuery();
+  const { isOpen } = useViewportQuery();
 
   useEffect(() => {
     // Side effects based on sidebar state changes
@@ -66,80 +63,21 @@ export const AppSidebar = () => {
       </SidebarHeader>
 
       <SidebarContent className='overflow-x-hidden'>
-        {/* Customer Support */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Customer Support</SidebarGroupLabel>
-          <SidebarMenu>
-            {customerSupportNavItems.map((item) => (
-              <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton
-                  asChild
-                  tooltip={item.title}
-                  isActive={pathname.startsWith(item.url)}
-                  className={cn(
-                    pathname.startsWith(item.url) &&
-                      'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
-                  )}
-                >
-                  <Link href={item.url}>
-                    <item.icon className='size-4' />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {/* Configuration */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Configuration</SidebarGroupLabel>
-          <SidebarMenu>
-            {configurationNavItems.map((item) => (
-              <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton
-                  asChild
-                  tooltip={item.title}
-                  isActive={pathname.startsWith(item.url)}
-                  className={cn(
-                    pathname.startsWith(item.url) &&
-                      'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
-                  )}
-                >
-                  <Link href={item.url}>
-                    <item.icon className='size-4' />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {/* Account */}
-        <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
-          <SidebarMenu>
-            {accountNavItems.map((item) => (
-              <SidebarMenuItem key={item.url}>
-                <SidebarMenuButton
-                  asChild
-                  tooltip={item.title}
-                  isActive={pathname.startsWith(item.url)}
-                  className={cn(
-                    pathname.startsWith(item.url) &&
-                      'from-sidebar-primary to-[#0b63f3]! text-sidebar-primary-foreground! hover:to-[#0b63f3]/90! bg-gradient-to-b'
-                  )}
-                >
-                  <Link href={item.url}>
-                    <item.icon className='size-4' />
-                    <span>{item.title}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
+        <SidebarNavGroup
+          heading='Customer Support'
+          entries={customerSupportNavItems}
+          currentPath={pathname}
+        />
+        <SidebarNavGroup
+          heading='Configuration'
+          entries={configurationNavItems}
+          currentPath={pathname}
+        />
+        <SidebarNavGroup
+          heading='Account'
+          entries={accountNavItems}
+          currentPath={pathname}
+        />
       </SidebarContent>
 
       <SidebarFooter>

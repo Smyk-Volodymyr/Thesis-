@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function useMediaQuery() {
+export function useViewportQuery() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
